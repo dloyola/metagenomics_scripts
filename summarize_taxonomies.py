@@ -79,12 +79,9 @@ def summary_level(otu_table, samples):
 	RANK = ["Domain", "Phylum", "Class", "Order", "Family", "Genus", "Species"]
 	SUMMARY = {}
 	for r in RANK:
-		SUMMARY[r] = [0,0]*len(samples)
+		SUMMARY[r] = [0,0]*len(samples)	
 	
-	
-	
-	for i in range(0, len(samples) ):
-		
+	for i in range(0, len(samples) ):		
 		for j in range(0, len(RANK)):
 			j_taxa = j + len(samples) + 1
 			for k in range(0, len(otu_table)):
@@ -107,11 +104,17 @@ def summary_level(otu_table, samples):
 		j = i * 2		
 		SUM[j] = nreads
 		SUM[j+1] = otus
+	header = []
+	for i in samples:
+		header.append(i+", seqs")
+		header.append(i+", otus")
+	header.append("Taxonomony")
+
 	
 	print "\n===== SUMMARY =====\n"
-	print SUM, "total"
+	print "\t".join(header) + "\n" + "\t".join([str(x) for x in SUM]) + "\tTotal"
 	for key in RANK:
-		print SUMMARY[key], key
+		print "\t".join([str(x) for x in SUMMARY[key]]) + "\t" + key
 
 	
 	#imprimir el numero de lecturas y otus classificados por nivel desde dominio a especie	
